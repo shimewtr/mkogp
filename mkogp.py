@@ -2,39 +2,47 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 
 def mkogp():
-    imageSize = (1200, 800)
-    iconSize = (160, 160)
-    backgroundColor = (112, 112, 112)
-    textColor = (255, 255, 255)
-    text = "記事タイトルを入れてください"
-    fontSize = 60
-    subText = "ブログのタイトルを入れてください"
-    subFontSize = 40
+    image_size = (1200, 630)
+    icon_size = (160, 160)
+    background_color = (112, 112, 112)
+    text_color = (255, 255, 255)
+    text = '記事タイトルを入れてください'
+    font_size = 60
+    font_medium_path = './fonts/MPLUS1p-Medium.ttf'
+    sub_text = "ブログのタイトルを入れてください"
+    subfont_size = 40
+    font_light_path = './fonts/MPLUS1p-Light.ttf'
+    icon_path = './assets/icon.png'
 
-    im = Image.new("RGB", imageSize, backgroundColor)
+    im = Image.new('RGB', image_size, background_color)
 
-    add_text(im, text, fontSize, textColor, imageSize[0]//2, imageSize[1]//3)
-    add_text(im, subText, subFontSize, textColor, imageSize[0]//2, imageSize[1]//6 * 5)
+    add_text(im, text, font_size, font_medium_path,
+             text_color, image_size[0]//2, image_size[1]//3)
+    add_text(im, sub_text, subfont_size, font_light_path,
+             text_color, image_size[0]//2, image_size[1]//6 * 5)
+    add_icon(im, image_size, icon_size, icon_path)
 
-    icon_path = './icon.png'
+    im.save('./image.png')
+
+
+def add_icon(im, image_size, icon_size, icon_path):
     icon = Image.open(icon_path).copy()
-    icon = icon.resize(size=iconSize, resample=Image.ANTIALIAS)
+    icon = icon.resize(size=icon_size, resample=Image.ANTIALIAS)
     mask = Image.new("L", icon.size, 0)
     draw = ImageDraw.Draw(mask)
     draw.ellipse((0, 0, icon.size[0], icon.size[1]), fill=255)
     mask = mask.filter(ImageFilter.GaussianBlur(1))
     icon.putalpha(mask)
-    im.paste(icon, (imageSize[0] // 2 - iconSize[0] // 2,
-         imageSize[1] // 7 * 4), icon)
+    im.paste(icon, (image_size[0] // 2 - icon_size[0] // 2,
+                    image_size[1] // 7 * 4), icon)
 
-    im.save("./image.png")
 
-def add_text(im, text, fontSize, textColor, width, height):
+def add_text(im, text, font_size, fontPath, text_color, width, height):
     draw = ImageDraw.Draw(im)
-    font = ImageFont.truetype('./MPLUS1p-Regular.ttf', fontSize)
-    textWidth, textHeight = draw.textsize(text, font=font)
+    font = ImageFont.truetype(fontPath, font_size)
+    textWidth, _ = draw.textsize(text, font=font)
     textTopLeft = (width - textWidth // 2, height)
-    draw.text(textTopLeft, text, fill=textColor, font=font)
+    draw.text(textTopLeft, text, fill=text_color, font=font)
 
 
 if __name__ == '__main__':
