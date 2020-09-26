@@ -1,4 +1,4 @@
-# mkogpr
+# mkogp
 
 ## License
 
