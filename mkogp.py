@@ -1,5 +1,10 @@
+import os
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
+EXPORT_PATH = os.environ['EXPORT_PATH']
+
+def mkdirs():
+    os.makedirs(EXPORT_PATH, exist_ok=True)
 
 def mkogp():
     image_size = (1200, 630)
@@ -17,7 +22,7 @@ def mkogp():
     im = Image.new('RGB', image_size, background_color)
 
     add_text(im, text, font_size, font_medium_path,
-             text_color, image_size[0]//2, image_size[1]//3)
+             text_color, image_size[0]//2, image_size[1]//4)
     add_text(im, sub_text, subfont_size, font_light_path,
              text_color, image_size[0]//2, image_size[1]//6 * 5)
     add_icon(im, image_size, icon_size, icon_path)
@@ -46,4 +51,5 @@ def add_text(im, text, font_size, fontPath, text_color, width, height):
 
 
 if __name__ == '__main__':
+    mkdirs()
     mkogp()
