@@ -27,7 +27,7 @@ def mkogp():
              text_color, image_size[0]//2, image_size[1]//6 * 5)
     add_icon(im, image_size, icon_size, icon_path)
 
-    im.save('./image.png')
+    im.save(EXPORT_PATH + '/image.png')
 
 
 def add_icon(im, image_size, icon_size, icon_path):
