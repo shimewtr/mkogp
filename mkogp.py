@@ -3,10 +3,9 @@ import os
 import pathlib
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
+BLOG_TITLE = os.environ['BLOG_TITLE']
 EXPORT_PATH = os.environ['EXPORT_PATH']
 POSTS_PATH = os.environ['POSTS_PATH']
-
-# def extract_meta_data(file_path):
 
 
 def extract_meta_data(file_path):
@@ -27,7 +26,7 @@ def extract_title_and_ogp_name(meta_data):
 
 
 def glob_md():
-    files = glob.glob(POSTS_PATH + '/*.md')
+    files = glob.glob(POSTS_PATH + '*.md')
     for file in files:
         meta_data = extract_meta_data(file)
         title, ogp_name = extract_title_and_ogp_name(meta_data)
@@ -46,7 +45,7 @@ def mkogp(title, ogp):
     text = title
     font_size = 60
     font_medium_path = './fonts/MPLUS1p-Medium.ttf'
-    sub_text = "ブログのタイトルを入れてください"
+    sub_text = BLOG_TITLE
     subfont_size = 40
     font_light_path = './fonts/MPLUS1p-Light.ttf'
     icon_path = './assets/icon.png'
