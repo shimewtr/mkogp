@@ -1,3 +1,3 @@
 ## Issue
 
-#{issue_number} {title}
+{submit_pull_request_issue_info}
